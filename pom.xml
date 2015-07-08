@@ -16,10 +16,12 @@
     </properties>
     
     <dependencies>
+        <!-- Jersey MVC Mustache -->
         <dependency>
             <groupId>org.glassfish.jersey.ext</groupId>
             <artifactId>jersey-mvc-mustache</artifactId>
             <version>${jersey-mvc}</version>
+            <!-- exclude Glassfish 4.1 build-in modules -->
             <exclusions>
                 <exclusion>
                     <groupId>org.glassfish.jersey.ext</groupId>
@@ -35,7 +37,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- Glassfish 4.1 build-in -->
+        <!-- Glassfish 4.1 build-in modules -->
         <dependency>
             <groupId>org.glassfish.jersey.ext</groupId>
             <artifactId>jersey-mvc</artifactId>
