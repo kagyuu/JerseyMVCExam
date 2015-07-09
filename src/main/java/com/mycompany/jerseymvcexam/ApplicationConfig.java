@@ -9,7 +9,8 @@ public class ApplicationConfig extends ResourceConfig {
     public ApplicationConfig() {
         this
         .packages(ApplicationConfig.class.getPackage().getName())
-        // .property(MustacheMvcFeature.TEMPLATE_BASE_PATH, "/Users/atsushi/templates")
+        //.property(MustacheMvcFeature.TEMPLATE_BASE_PATH, "/Users/atsushi/templates")
+        //.property(MustacheMvcFeature.ENCODING, "UTF-8")
         .register(MustacheMvcFeature.class);
     }    
 }

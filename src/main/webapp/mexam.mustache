@@ -1,0 +1,242 @@
+<!DOCTYPE html output>
+<html output>
+<head>
+    <title>Mustache Exam</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+table.table010 {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border-collapse: collapse;
+  border: solid 1px #999;
+  font-size: 100%;
+}
+
+table.table010 th,
+table.table010 td {
+  border: solid 1px #999;
+  padding: 4px 6px;
+  vertical-align: top;
+}
+
+table.table010 th {
+  background: #E6E6E6;
+  text-align: center;
+  white-space: nowrap;
+  color: #666;
+  width: 400px;
+}        
+    </style>        
+</head>
+<body>
+
+<!-- ====================================================================== -->
+<h1>Variables</h1>
+
+<table class="table010">
+    <tr><th>mustache script</th><th>html output</th></tr>
+    <tr><td>&#123;{message}&#125;</td><td>{{message}}</td></tr>
+</table>
+
+<hr>
+
+<!-- ====================================================================== -->
+<h1>HTML Escape</h1>
+
+<table class="table010">
+    <tr><th>mustache script</th><th>html output</th></tr>
+    <tr><td>&#123;{html output}&#125;</td><td>{{html}}</td></tr>
+    <tr><td>&#123;&#123;{html output}&#125;&#125;</td><td>{{{html}}}</td></tr>
+    <tr><td>&#123;{& html output}&#125;</td><td>{{&html}}</td></tr>
+</table>
+
+mustache は、デフォルト動作で文字列を Escape する。
+(たとえば、&lt;font&gt; という文字列データは &amp;lt;font&amp;gt; にエスケープされる)<br>
+&#123;&#123;&#123; か &#123;& で、エスケープを抑止することができる。
+
+<hr>
+
+<!-- ====================================================================== -->
+<h1>IF ELSE</h1>
+
+<table class="table010">
+    <tr><th>mustache script</th><th>html output</th></tr>
+    <tr>
+        <td>
+&#123;{#flag1}&#125;<br>
+&nbsp;&nbsp;Flag1 ON<br>
+&#123;{/flag1}&#125;<br>
+        </td>
+        <td>
+{{#flag1}}
+Flag1 ON    
+{{/flag1}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+&#123;{#flag2}&#125;<br>
+&nbsp;&nbsp;Flag2 ON<br>
+&#123;{/flag2}&#125;<br>
+&#123;{^flag2}&#125;<br>
+&nbsp;&nbsp;Flag2 OFF<br>
+&#123;{/flag2}&#125;<br>
+        </td>
+        <td>
+{{#flag2}}
+Flag2 ON    
+{{/flag2}}
+{{^flag2}}
+Flag2 OFF    
+{{/flag2}}
+        </td>
+    </tr>
+</table>
+
+<hr>
+
+<!-- ====================================================================== -->
+<h1>ITERATIVE</h1>
+
+<table class="table010">
+    <tr><th>mustache script</th><th>html output</th></tr>
+    <tr>
+        <td>
+&lt;ul&gt;<br>
+&#123;{#team1}&#125;<br>
+&nbsp;&nbsp;&lt;li&gt; &#123;{title}&#125; &#123;{name}&#125; &lt;/li&gt;<br>
+&#123;{/team1}&#125;<br>
+&lt;/ul&gt;
+        </td>
+        <td>
+<ul>
+{{#team1}}
+<li> {{title}} {{name}} </li>
+{{/team1}}
+</ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+&lt;ul&gt;<br>
+&#123;{#team2}&#125;<br>
+&nbsp;&nbsp;&lt;li&gt; &#123;{title}&#125; &#123;{name}&#125; &lt;/li&gt;<br>
+&#123;{/team2}&#125;<br>
+&#123;{^team2}&#125;<br>
+&nbsp;&nbsp;&lt;li&gt;NO MEMBER&lt;/li&gt;<br>
+&#123;{/team2}&#125;<br>
+&lt;/ul&gt;
+        </td>
+        <td>
+<ul>
+{{#team2}}
+  <li> {{title}} {{name}} </li>
+{{/team2}}
+{{^team2}}
+  <li>NO MEMBER</li>
+{{/team2}}
+</ul>
+        </td>
+    </tr>
+</table>
+
+&#123;{# セクションは、ITERATIVE の展開 <br>
+&#123;{^ セクションは、ITERATIVE の要素数が 0 、または ITERATIVE 自体が null のとき、評価される。
+
+<hr>
+
+<!-- ====================================================================== -->
+<h1>FUNCTION</h1>
+
+<table class="table010">
+    <tr><th>mustache script</th><th>html output</th></tr>
+    <tr>
+        <td>
+&#123;{#copyrights}&#125;<br>
+Copyright &amp;copy; yyyy ACME Co. LTD All rights reserved<br>
+&#123;{/copyrights}&#125;<br>
+
+        </td>
+        <td>
+{{#copyrights}}
+Copyright &copy; yyyy ACME Co. LTD All rights reserved  
+{{/copyrights}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+&#123;{#copyrights}&#125;<br>
+&#123;{message}&#125;&ltbr&gt;<br>
+Copyright &amp;copy; yyyy ACME Co. LTD All rights reserved<br>
+&#123;{/copyrights}&#125;<br>
+
+        </td>
+        <td>
+{{#copyrights}}
+{{message}}<br>
+Copyright &copy; yyyy ACME Co. LTD All rights reserved  
+{{/copyrights}}
+        </td>
+    </tr>
+</table>
+
+Java Bean のプロパティの TemplateFunction を実行することができる。<br>
+引数は、&#123;{#copyrights}&#125;&#123;{/copyrights}&#125; に囲まれた文字列。
+この文字列がテンプレートであればさらに展開される。
+
+<hr>
+
+<!-- ====================================================================== -->
+<h1>IMPORT</h1>
+
+Mustache は、&#123;{> /footer}&#125; で、footer.mustache をインポートできる。<br>
+しかし、このタグは、Jersey MVC mustache の機能ではなく Mustache の機能であるため、
+footer.mustache をカレントディレクトリから探してしまう。<br>
+まぁ Jersey MVC mustache からは使えないということで<br>
+<br>
+必要があれば FUNCTION で実装しよう
+
+<hr>
+
+<!-- ====================================================================== -->
+<h1>日本語の文字化け</h1>
+
+う～ん、Jersey MVC は、ところどころでファイルの読み込みや書き出しに
+デフォルトエンコーディングを使っているので、
+Glassfish の管理コンソールで JVM オプションに、"-Dfile.encoding=utf-8" 
+を追加すとよろし
+
+<hr>
+    
+<!-- ====================================================================== -->
+<h1>コメント</h1>
+
+<table class="table010">
+    <tr><th>mustache script</th><th>html output</th></tr>
+    <tr>
+        <td>&#123;{! Comment}&#125;</td>
+        <td>{{! Comment }}</td>
+    </tr>
+</table>
+
+<hr>
+
+<!-- ====================================================================== -->
+<h1>&#123;{&nbsp;}&#125; と表示したい</h1>
+
+<table class="table010">
+    <tr><th>mustache script</th><th>html output</th></tr>
+    <tr>
+        <td>&amp;#123;{&nbsp;}&amp;#125;</td>
+        <td>&#123;{&nbsp;}&#125;</td>
+    </tr>
+</table>
+
+mustache には、&#123;{&nbsp;}&#125; をエスケープする文法がないので、 
+mustache テンプレート上では、実体参照文字を使い &amp;#123;{&nbsp;}&amp;#125; と記述する。
+
+<hr>
+        
+    </body>
+</html>
