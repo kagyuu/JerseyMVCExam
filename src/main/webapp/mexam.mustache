@@ -1,5 +1,5 @@
 <!DOCTYPE html output>
-<html output>
+<html>
 <head>
     <title>Mustache Exam</title>
     <meta charset="utf-8">
@@ -46,9 +46,9 @@ table.table010 th {
 
 <table class="table010">
     <tr><th>mustache script</th><th>html output</th></tr>
-    <tr><td>&#123;{html output}&#125;</td><td>{{html}}</td></tr>
-    <tr><td>&#123;&#123;{html output}&#125;&#125;</td><td>{{{html}}}</td></tr>
-    <tr><td>&#123;{& html output}&#125;</td><td>{{&html}}</td></tr>
+    <tr><td>&#123;{html}&#125;</td><td>{{html}}</td></tr>
+    <tr><td>&#123;&#123;{html}&#125;&#125;</td><td>{{{html}}}</td></tr>
+    <tr><td>&#123;{& html}&#125;</td><td>{{&html}}</td></tr>
 </table>
 
 mustache は、デフォルト動作で文字列を Escape する。
