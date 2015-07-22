@@ -37,6 +37,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- Jersey MVC Bean Validator -->
+        <dependency>
+            <groupId>org.glassfish.jersey.ext</groupId>
+            <artifactId>jersey-mvc-bean-validation</artifactId>
+            <version>${jersey-mvc}</version>
+        </dependency>        
         <!-- Glassfish 4.1 build-in modules -->
         <dependency>
             <groupId>org.glassfish.jersey.ext</groupId>

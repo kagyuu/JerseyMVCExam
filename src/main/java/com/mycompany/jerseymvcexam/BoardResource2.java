@@ -1,17 +1,19 @@
 package com.mycompany.jerseymvcexam;
 
 import javax.ejb.EJB;
+import javax.validation.Valid;
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.glassfish.jersey.server.mvc.ErrorTemplate;
 import org.glassfish.jersey.server.mvc.Template;
 
-@Path("board")
-public class BoardResource {
+@Path("board2")
+public class BoardResource2 {
     
     @EJB
     private BoardEJB board;
@@ -34,9 +36,11 @@ public class BoardResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_HTML)
     @Template(name = "/board")
-    public BoardBean submitMessage(
-            @FormParam("name") String name, 
-            @FormParam("comment") String comment) {
+    @ErrorTemplate(name = "/board_error")
+    public BoardBean submitMessage(@Valid @BeanParam ContributeBean contribute) {
+        
+        String name = contribute.getName();
+        String comment = contribute.getComment();
         
         board.addMessage(name, comment);
         
